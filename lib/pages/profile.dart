@@ -1,11 +1,43 @@
+import 'dart:io'; // Needed for File operations
 import 'package:flutter/material.dart';
+import 'package:image_picker/image_picker.dart'; // Import the package
 
-class Profile extends StatelessWidget {
+class Profile extends StatefulWidget {
   const Profile({super.key});
- @override
+
+  @override
+  State<Profile> createState() => _ProfileState();
+}
+
+class _ProfileState extends State<Profile> {
+  // Store the picked image file path here
+  XFile? _pickedImage; 
+  final ImagePicker _picker = ImagePicker();
+
+  // Function to trigger the image picker
+  Future<void> _changeProfileImage() async {
+    try {
+      // You can change Source to ImageSource.camera if you want to take a new photo
+      final XFile? image = await _picker.pickImage(
+        source: ImageSource.gallery,
+        imageQuality: 80, // Compresses image slightly for performance
+      );
+
+      if (image != null) {
+        setState(() {
+          _pickedImage = image;
+        });
+      }
+    } catch (e) {
+      // Handle permission denied or other errors here
+      debugPrint("Error picking image: $e");
+    }
+  }
+
+  @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Color(0xFF222429),
+      backgroundColor: const Color(0xFF222429),
       body: SingleChildScrollView(
         child: Column(
           children: [
@@ -24,23 +56,31 @@ class Profile extends StatelessWidget {
   }
 
   Widget _buildProfileImage() {
+    // Determine the ImageProvider based on whether an image was picked or not
+    ImageProvider imageProvider;
+    if (_pickedImage != null) {
+      imageProvider = FileImage(File(_pickedImage!.path));
+    } else {
+      imageProvider = const AssetImage('assets/images/profileicon.jpg');
+    }
+
     return Center(
       child: Stack(
         children: [
-          const CircleAvatar(
+          CircleAvatar(
             radius: 60,
-            backgroundImage: AssetImage('assets/images/profileicon.jpg'),
+            backgroundImage: imageProvider, // Uses dynamic provider
           ),
           Positioned(
             bottom: 0,
             right: 0,
             child: CircleAvatar(
-              backgroundColor:Color(0xFFad2a2a),
+              backgroundColor: const Color(0xFFad2a2a),
               radius: 14,
               child: IconButton(
                 padding: EdgeInsets.zero,
                 icon: const Icon(Icons.camera_alt, size: 16, color: Colors.white),
-                onPressed: () {},
+                onPressed: _changeProfileImage, // Linked your function here
               ),
             ),
           ),
@@ -84,7 +124,7 @@ class Profile extends StatelessWidget {
 
   Widget _buildMenuItem(IconData icon, String title, VoidCallback onTap, {Color? textColor, Color? iconColor}) {
     return ListTile(
-      leading: Icon(icon, color: iconColor ??Color(0xFFad2a2a)),
+      leading: Icon(icon, color: iconColor ?? const Color(0xFFad2a2a)),
       title: Text(title, style: TextStyle(color: textColor, fontWeight: FontWeight.w500)),
       trailing: const Icon(Icons.arrow_forward_ios, size: 16, color: Colors.grey),
       onTap: onTap,

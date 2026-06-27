@@ -30,46 +30,59 @@ class _LocationsState extends State<Locations> {
     });
   }
 
-  void _showLocationFormDialog({Location? location}) async {
-    final title = location == null ? "Add Location" : 'Edit Location';
-    final result = await showDialog<bool>(
-      context: context,
-      builder: (_) {
-        return Dialog(
-          backgroundColor: const Color(0xFF222429),
-          shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.circular(20),
+void _showLocationFormDialog({Location? location}) async {
+  final title = location == null ? "Add Location" : 'Edit Location';
+  final result = await showDialog<bool>(
+    context: context,
+    // 1. Set barrierDismissible if you want to allow tapping outside to close
+    barrierDismissible: true, 
+    builder: (_) {
+      return Dialog(
+        backgroundColor: const Color(0xFF222429),
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(20),
+        ),
+        child: AnimatedPadding(
+          duration: const Duration(milliseconds: 200),
+          padding: EdgeInsets.only(
+            bottom: MediaQuery.of(context).viewInsets.bottom,
           ),
-              child: AnimatedPadding(
-                duration: const Duration(milliseconds: 200),
-                padding: EdgeInsets.only(
-                  bottom: MediaQuery.of(context).viewInsets.bottom,
-                ),
-                child: ConstrainedBox(
-                  constraints: BoxConstraints(
-                    maxWidth: 600,
-                    maxHeight: MediaQuery.of(context).size.height * 0.8,
-                  ),
-                  child: Padding(
-                    padding: const EdgeInsets.all(14),
-                    child: Column(
-                      mainAxisSize: MainAxisSize.min,
-                      children: [
-                        Text(
-                          title,
-                          style: const TextStyle(color: Colors.white, fontSize: 20,
-                  ),
-                        ),
-                        const SizedBox(height: 16),
-                        LocationForms(location: location),
-                      ],
+          child: ConstrainedBox(
+            constraints: BoxConstraints(
+              maxWidth: 600,
+              maxHeight: MediaQuery.of(context).size.height * 0.6,
+            ),
+            child: Padding(
+              padding: const EdgeInsets.all(14),
+              child: Column(
+                mainAxisSize: MainAxisSize.min, // Dynamic dialog size
+                crossAxisAlignment: CrossAxisAlignment.stretch, // Makes fields take full width
+                children: [
+                  Center( // Centered title looks cleaner in dialogs
+                    child: Text(
+                      title,
+                      style: const TextStyle(
+                        color: Colors.white, 
+                        fontSize: 20,
+                        fontWeight: FontWeight.bold,
+                      ),
                     ),
                   ),
-                ),
+                  const SizedBox(height: 16),
+                  
+                  // 2. Wrap the form in an Expanded widget
+                  Expanded(
+                    child: LocationForms(location: location),
+                  ),
+                ],
               ),
-    );
-      },
-    );
+            ),
+          ),
+        ),
+      );
+    },
+  );
+
 
     if (result == true) {
       await _loadLocations();

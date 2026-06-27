@@ -31,7 +31,7 @@ class _HomePageState extends State<HomePage> {
   "Profile",
   "Messages",
   "Wander-Poll",
-  "History",
+  "Locations",
   "Settings"
   ];
 
