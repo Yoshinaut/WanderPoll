@@ -7,7 +7,7 @@ import 'package:wonder_poll/pages/chat.dart';
 import 'package:wonder_poll/pages/locations.dart';
 import 'package:wonder_poll/pages/feed.dart';
 import 'package:wonder_poll/pages/profile.dart';
-import 'package:wonder_poll/pages/settings.dart';
+import 'package:wonder_poll/pages/About.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({super.key});
@@ -24,7 +24,7 @@ class _HomePageState extends State<HomePage> {
   Messaging(),
   Feed(),
   Locations(),
-  Settings()
+  About()
   ];
 
   final List<String> _titles = [
@@ -88,11 +88,11 @@ class _HomePageState extends State<HomePage> {
         const TextStyle(fontSize: 16)),
 
     destinations: [
-      NavigationDestination(icon: Icon(Icons.account_box), label: "Profile"),
+      NavigationDestination(icon: Icon(Icons.account_circle_rounded), label: "Profile"),
       NavigationDestination(icon: Icon(Icons.message), label: "Chat"),
       NavigationDestination(icon: Icon(Icons.home), label: "Home"),
       NavigationDestination(icon: Icon(Icons.map), label: "Locations"),
-      NavigationDestination(icon: Icon(Icons.settings_rounded), label: "Settings"),
+      NavigationDestination(icon: Icon(Icons.info), label: "About"),
     ],);
   }
 
