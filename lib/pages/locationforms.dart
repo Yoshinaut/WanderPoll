@@ -106,12 +106,11 @@ class _LocationFormsState extends State<LocationForms> {
         color: const Color(0xFF222429),
         borderRadius: BorderRadius.circular(16),
       ),
-      child: SingleChildScrollView(
         child: Form(
           key: _formKey,
           child: Column(
-            spacing: 12,
             mainAxisSize: MainAxisSize.min,
+            crossAxisAlignment: CrossAxisAlignment.stretch,
             children: [
               const SizedBox(height: 8),
               
@@ -159,66 +158,81 @@ class _LocationFormsState extends State<LocationForms> {
               
               const SizedBox(height: 8),
 
-              // Image Selector Preview Target
-              // Fixed layout crash: Moved out of Row into the main Column
-              GestureDetector(
-                onTap: _pickImage,
-                child: Container(
-                  height: 140,
-                  width: double.infinity,
-                  decoration: BoxDecoration(
-                    color: Colors.grey[900], // Darkened to match your sleek theme
-                    borderRadius: BorderRadius.circular(12),
-                    border: Border.all(color: Colors.white10),
-                  ),
-                  child: _image != null
-                      ? ClipRRect(
-                          borderRadius: BorderRadius.circular(11),
-                          child: Image.file(_image!, fit: BoxFit.cover),
-                        )
-                      : _existingImagePath != null
+// Image Preview & Picker
+              Stack(
+                children: [
+                  GestureDetector(
+                    onTap: _pickImage,
+                    child: Container(
+                      height: 140,
+                      width: double.infinity,
+                      decoration: BoxDecoration(
+                        color: Colors.grey[900],
+                        borderRadius: BorderRadius.circular(12),
+                        border: Border.all(color: Colors.white10),
+                      ),
+                      child: _image != null
                           ? ClipRRect(
                               borderRadius: BorderRadius.circular(11),
-                              child: Image.file(File(_existingImagePath!), fit: BoxFit.cover),
+                              child: Image.file(
+                                _image!,
+                                fit: BoxFit.cover,
+                                width: double.infinity,
+                              ),
+                            )
+                          : (!_imageWasRemoved && _existingImagePath != null)
+                          ? ClipRRect(
+                              borderRadius: BorderRadius.circular(11),
+                              child: Image.file(
+                                File(_existingImagePath!),
+                                fit: BoxFit.cover,
+                                width: double.infinity,
+                              ),
                             )
                           : const Center(
                               child: Column(
                                 mainAxisAlignment: MainAxisAlignment.center,
                                 children: [
-                                  Icon(Icons.image, color: Colors.white54),
-                                  SizedBox(height: 4),
+                                  Icon(
+                                    Icons.add_photo_alternate_outlined,
+                                    color: Colors.white54,
+                                    size: 40,
+                                  ),
+                                  SizedBox(height: 8),
                                   Text(
-                                    "Tap to select image",
+                                    "Tap to select an image",
                                     style: TextStyle(color: Colors.white54),
                                   ),
                                 ],
                               ),
                             ),
-                ),
-              ),
-              
-              // Show the delete/clear button overlay ONLY if an image exists
-              if (_image != null || _existingImagePath != null)
-                Positioned(
-                  top: 8,
-                  right: 8,
-                  child: GestureDetector(
-                    onTap: _removeImage, // Calls the method we will create next
-                    child: Container(
-                      padding: const EdgeInsets.all(6),
-                      decoration: const BoxDecoration(
-                        color: Colors.black54, // Semi-transparent dark circular backing
-                        shape: BoxShape.circle,
-                      ),
-                      child: const Icon(
-                        Icons.close,
-                        color: Colors.white,
-                        size: 20,
-                      ),
                     ),
                   ),
-      ),
 
+                  // Delete image button
+                  if (_image != null ||
+                      (!_imageWasRemoved && _existingImagePath != null))
+                    Positioned(
+                      top: 8,
+                      right: 8,
+                      child: GestureDetector(
+                        onTap: _removeImage,
+                        child: Container(
+                          padding: const EdgeInsets.all(6),
+                          decoration: const BoxDecoration(
+                            color: Colors.black54,
+                            shape: BoxShape.circle,
+                          ),
+                          child: const Icon(
+                            Icons.close,
+                            color: Colors.white,
+                            size: 20,
+                          ),
+                        ),
+                      ),
+      ),
+                ],
+              ),
               const SizedBox(height: 12),
 
               // Action Buttons Row
@@ -243,7 +257,6 @@ class _LocationFormsState extends State<LocationForms> {
               )
             ],
           ),
-        ),
       ),
     );
   }

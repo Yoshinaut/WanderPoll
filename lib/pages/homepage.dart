@@ -12,8 +12,8 @@ class Home extends StatefulWidget {
 }
 
 class _HomeState extends State<Home> {
-  List<Location> _locations = [];
   bool _isLoading = true;
+  List<Location> _locations = [];
 
   @override
   void initState() {
@@ -40,28 +40,34 @@ class _HomeState extends State<Home> {
           shape: RoundedRectangleBorder(
             borderRadius: BorderRadius.circular(20),
           ),
-          child: SizedBox(
-            width: 500,
-            child: Padding(
-              padding: const EdgeInsets.all(20),
-              child: Column(
-                mainAxisSize: MainAxisSize.min,
-                children: [
-                  Text(
-                    title,
-                    style: const TextStyle(
-                      color: Colors.white,
-                      fontSize: 20,
-                      fontWeight: FontWeight.bold,
+              child: AnimatedPadding(
+                duration: const Duration(milliseconds: 200),
+                padding: EdgeInsets.only(
+                  bottom: MediaQuery.of(context).viewInsets.bottom,
+                ),
+                child: ConstrainedBox(
+                  constraints: BoxConstraints(
+                    maxWidth: 600,
+                    maxHeight: MediaQuery.of(context).size.height * 0.8,
+                  ),
+                  child: Padding(
+                    padding: const EdgeInsets.all(14),
+                    child: Column(
+                      mainAxisSize: MainAxisSize.min,
+                      children: [
+                        Text(
+                          title,
+                          style: const TextStyle(color: Colors.white, fontSize: 20,
+                  ),
+                        ),
+                        const SizedBox(height: 16),
+                        LocationForms(location: location),
+                      ],
                     ),
                   ),
-                  const SizedBox(height: 16),
-                  LocationForms(location: location),
-                ],
+                ),
               ),
-            ),
-          ),
-        );
+    );
       },
     );
 
@@ -244,4 +250,4 @@ class _HomeState extends State<Home> {
         ),
       );
     }
-  }
+}
