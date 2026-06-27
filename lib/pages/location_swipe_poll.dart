@@ -88,7 +88,7 @@ class _LocationSwipePollState extends State<LocationSwipePoll> {
     return Scaffold(
       backgroundColor: const Color(0xFF1A1B1F),
       appBar: AppBar(
-        title: const Text('Wonder Poll Swipe', style: TextStyle(color: Colors.white)),
+        title: const Text('Voting', style: TextStyle(color: Colors.white)),
         backgroundColor: const Color(0xFF222429),
         iconTheme: const IconThemeData(color: Colors.white),
       ),

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:wonder_poll/pages/home.dart';
+import 'package:wonder_poll/pages/profile.dart';
 
 void main() {
   runApp(const MainApp());
@@ -27,7 +28,7 @@ class MainApp extends StatelessWidget {
 
       fontFamily:'Poppins'),
 
-      home: const HomePage(
+      home: const LoginScreen(
       ),
     );
   }

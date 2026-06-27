@@ -57,10 +57,10 @@ class About extends StatelessWidget {
                 borderRadius: BorderRadius.circular(12),
               ),
               child: const Text(
-                'Wander-Poll is an interactive platform designed to help users explore, log, '
-                'and evaluate unique locations around them. Whether you are hunting for hidden '
-                'gems or keeping a curated gallery of your favorite local hubs, Wonder Poll provides '
-                'the ultimate tool to map out your world.',
+                'Wander-Poll is an interactive social tool designed to help users decide, '
+                'and vote on unique locations around them in order to make decision making  '
+                "easier for friends and barkadas. Log and record places you've been, and suggest"
+                "new areas to explore. All within one app- it's nothing less than wonderful" ,
                 style: TextStyle(color: Colors.white, fontSize: 14, height: 1.5),
               ),
             ),
@@ -70,7 +70,7 @@ class About extends StatelessWidget {
             // EDIT HERE: CONTRIBUTIONS SECTION
             // ==========================================
             const Text(
-              'Contributions & Team',
+              'Contributions & Members',
               style: TextStyle(color: Colors.white, fontSize: 18, fontWeight: FontWeight.bold),
             ),
             const SizedBox(height: 12),
@@ -114,14 +114,14 @@ class About extends StatelessWidget {
 
             _buildContributorCard(
               name: 'Ishi Velasco',
-              role: 'Limitations guidance admin',
+              role: 'Limitations admin',
               contribution: 'Made sure all ideation, conceptualization, and development is within scope of project goals',
             ),
             const SizedBox(height: 12),
 
             _buildContributorCard(
               name: 'Arn Mendoza',
-              role: 'Technologies expert and guide',
+              role: 'Technologies expert',
               contribution: 'Listed technologies and tools that were used during project development.',
             ),
             const SizedBox(height: 12),
