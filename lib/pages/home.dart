@@ -1,10 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_speed_dial/flutter_speed_dial.dart';
+import 'package:wonder_poll/pages/location_swipe_poll.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:wonder_poll/pages/chat.dart';
-import 'package:wonder_poll/pages/history.dart';
-import 'package:wonder_poll/pages/homepage.dart';
+import 'package:wonder_poll/pages/locations.dart';
+import 'package:wonder_poll/pages/feed.dart';
 import 'package:wonder_poll/pages/profile.dart';
 import 'package:wonder_poll/pages/settings.dart';
 
@@ -21,8 +22,8 @@ class _HomePageState extends State<HomePage> {
   final List <Widget> _pages = const[
   Profile(),
   Messaging(),
-  Home(),
-  History(),
+  Feed(),
+  Locations(),
   Settings()
   ];
 
@@ -90,7 +91,7 @@ class _HomePageState extends State<HomePage> {
       NavigationDestination(icon: Icon(Icons.account_box), label: "Profile"),
       NavigationDestination(icon: Icon(Icons.message), label: "Chat"),
       NavigationDestination(icon: Icon(Icons.home), label: "Home"),
-      NavigationDestination(icon: Icon(Icons.history), label: "History"),
+      NavigationDestination(icon: Icon(Icons.map), label: "Locations"),
       NavigationDestination(icon: Icon(Icons.settings_rounded), label: "Settings"),
     ],);
   }
@@ -103,7 +104,7 @@ class _HomePageState extends State<HomePage> {
       bottomNavigationBar: navBar(),
 
       floatingActionButton: 
-      (_currentIndex == 2 || _currentIndex == 1) ? null:
+      (_currentIndex == 3 || _currentIndex == 1) ? null:
       SpeedDial(
 
         spacing: 10,
@@ -123,12 +124,13 @@ class _HomePageState extends State<HomePage> {
             backgroundColor: Colors.red,
             label: 'New Poll',
             onTap: () {
-              ScaffoldMessenger.of(context).showSnackBar(
-                const SnackBar(
-                content: Text('Feature not yet available'),
-                duration: Duration(seconds: 2), // How long it stays on screen
-              ));
-            },),
+              Navigator.of(context).push(
+              MaterialPageRoute(
+              builder: (context) => const LocationSwipePoll(),
+          ),
+        );
+      },
+    ),
 
           SpeedDialChild(
             child: Icon(Icons.place),

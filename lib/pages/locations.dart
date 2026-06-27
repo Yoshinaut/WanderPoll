@@ -4,14 +4,14 @@ import 'package:wonder_poll/Model/location.dart';
 import 'package:wonder_poll/Repositories/location_repo.dart';
 import 'package:wonder_poll/pages/locationforms.dart';
 
-class Home extends StatefulWidget {
-  const Home({super.key});
+class Locations extends StatefulWidget {
+  const Locations({super.key});
 
   @override
-  State<Home> createState() => _HomeState();
+  State<Locations> createState() => _LocationsState();
 }
 
-class _HomeState extends State<Home> {
+class _LocationsState extends State<Locations> {
   bool _isLoading = true;
   List<Location> _locations = [];
 
